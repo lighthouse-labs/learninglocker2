@@ -13,7 +13,9 @@ services:
     restart: unless-stopped
 
   xapi:
-    image: learninglocker/xapi-service:2.1.10
+    build:
+      context: ./xapi-service
+    # command: "yarn start"
     restart: unless-stopped
     environment:
       - MONGO_URL
