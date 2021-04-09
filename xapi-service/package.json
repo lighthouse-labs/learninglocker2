@@ -114,10 +114,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "yarn lint-ci"
-    }
   }
 }
