@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 RUN yarn install --production --ignore-engines --frozen-lockfile
-RUN yarn add typescript
+RUN yarn add typescript@4.2.4
 RUN yarn build
 
 EXPOSE 80
