@@ -1,7 +1,6 @@
-version: '3.7'
+version: "3.7"
 
 services:
-
   mongo:
     image: mongo:latest
     restart: unless-stopped
@@ -53,8 +52,8 @@ services:
     command: "node api/dist/server"
     restart: unless-stopped
     depends_on:
-        - mongo
-        - redis
+      - mongo
+      - redis
     volumes:
       - app-storage:/opt/learninglocker/storage
 
@@ -102,4 +101,3 @@ volumes:
   mongo-data:
   ui-logs:
   app-storage:
-
