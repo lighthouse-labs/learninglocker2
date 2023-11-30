@@ -32,7 +32,7 @@ WORKDIR /opt/learninglocker
 
 EXPOSE $UI_PORT $API_PORT
 
-COPY env.template .env.template
+COPY env.template .env
 COPY entrypoint-common.sh entrypoint-common.sh
 COPY entrypoint-ui.sh entrypoint-ui.sh
 
