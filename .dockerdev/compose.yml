@@ -1,0 +1,76 @@
+version: "3.7"
+
+x-common: &common
+  restart: no
+
+services:
+  mongo:
+    <<: *common
+    extends: &ext
+      file: ../docker-compose.yml
+      service: mongo
+
+  redis:
+    <<: *common
+    extends:
+      <<: *ext
+      service: redis
+
+  xapi:
+    <<: *common
+    extends:
+      <<: *ext
+      service: xapi
+    depends_on:
+      - mongo
+      - redis
+      - worker
+
+  api:
+    <<: *common
+    extends:
+      <<: *ext
+      service: api
+    depends_on:
+      - mongo
+      - redis
+
+  ui:
+    <<: *common
+    extends:
+      <<: *ext
+      service: ui
+    depends_on:
+      - mongo
+      - redis
+      - api
+
+  worker:
+    <<: *common
+    extends:
+      <<: *ext
+      service: worker
+    depends_on:
+      - mongo
+      - redis
+
+  # this one gets redefined here because it's the only one that needs modifying for local
+  nginx:
+    <<: *common
+    build:
+      context: ../nginx
+    image: learninglocker2-nginx:${DOCKER_TAG}
+    environment:
+      - DOMAIN_NAME
+    depends_on:
+      - ui
+      - xapi
+      - worker
+    ports:
+      - 5000:80
+
+volumes:
+  xapi-storage:
+  mongo-data:
+  ui-logs:
+  app-storage:
