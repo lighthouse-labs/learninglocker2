@@ -6,9 +6,28 @@ x-common: &common
 services:
   mongo:
     <<: *common
-    image: mongo:5.0
+    image: mongo:5.0 # used this version bc newer versions fail provisioning
     volumes:
       - mongo-data:/data/db
+
+  nginx:
+    <<: *common
+    build:
+      context: ../nginx
+    image: learninglocker2-nginx:${DOCKER_TAG}
+    environment:
+      - DOMAIN_NAME
+    depends_on:
+      - ui
+      - xapi
+      - worker
+    ports:
+      - 5000:80 # access using port 5000 from host machine, 80 from other containers
+    networks:
+      default:
+      lhl-dev:
+        aliases:
+          - locker.local
 
   redis:
     <<: *common
@@ -54,20 +73,9 @@ services:
       - mongo
       - redis
 
-  # this one gets redefined here because it's the only one that needs modifying for local
-  nginx:
-    <<: *common
-    build:
-      context: ../nginx
-    image: learninglocker2-nginx:${DOCKER_TAG}
-    environment:
-      - DOMAIN_NAME
-    depends_on:
-      - ui
-      - xapi
-      - worker
-    ports:
-      - 5000:80
+networks:
+  lhl-dev:
+    name: lhl-dev
 
 volumes:
   xapi-storage:
