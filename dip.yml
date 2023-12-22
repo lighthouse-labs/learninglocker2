@@ -1,0 +1,27 @@
+version: "7.1"
+
+# Define default environment variables to pass
+# to Docker Compose
+environment:
+  RAILS_ENV: development
+
+compose:
+  files:
+    - .dockerdev/compose.yml
+  project_name: learninglocker
+
+interaction:
+  bash:
+    description: Run an arbitrary script within a container (or open a shell without deps)
+    service: api
+    command: /bin/bash
+
+  serve:
+    description: Run server
+    service: nginx
+    compose:
+      run_options: [service-ports, use-aliases]
+
+provision:
+  - dip down --volumes --remove-orphans
+  - dip bash -c "node cli/dist/server createSiteAdmin admin@lighthouselabs.ca lhl-local lighthouse1"

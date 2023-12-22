@@ -1,0 +1,84 @@
+version: "3.7"
+
+x-common: &common
+  restart: no
+
+services:
+  mongo:
+    <<: *common
+    image: mongo:5.0 # used this version bc newer versions fail provisioning
+    volumes:
+      - mongo-data:/data/db
+
+  nginx:
+    <<: *common
+    build:
+      context: ../nginx
+    image: learninglocker2-nginx:${DOCKER_TAG}
+    environment:
+      - DOMAIN_NAME
+    depends_on:
+      - ui
+      - xapi
+      - worker
+    ports:
+      - 5000:80 # access using port 5000 from host machine, 80 from other containers
+    networks:
+      default:
+      lhl-dev:
+        aliases:
+          - locker.local
+
+  redis:
+    <<: *common
+    extends: &ext
+      file: ../docker-compose.yml
+      service: redis
+
+  xapi:
+    <<: *common
+    extends:
+      <<: *ext
+      service: xapi
+    depends_on:
+      - mongo
+      - redis
+      - worker
+
+  api:
+    <<: *common
+    extends:
+      <<: *ext
+      service: api
+    depends_on:
+      - mongo
+      - redis
+
+  ui:
+    <<: *common
+    extends:
+      <<: *ext
+      service: ui
+    depends_on:
+      - mongo
+      - redis
+      - api
+
+  worker:
+    <<: *common
+    extends:
+      <<: *ext
+      service: worker
+    depends_on:
+      - mongo
+      - redis
+
+networks:
+  lhl-dev:
+    name: lhl-dev
+
+volumes:
+  xapi-storage:
+  mongo-data:
+  ui-logs:
+  app-storage:
