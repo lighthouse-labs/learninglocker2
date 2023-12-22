@@ -6,14 +6,14 @@ x-common: &common
 services:
   mongo:
     <<: *common
-    extends: &ext
-      file: ../docker-compose.yml
-      service: mongo
+    image: mongo:5.0
+    volumes:
+      - mongo-data:/data/db
 
   redis:
     <<: *common
-    extends:
-      <<: *ext
+    extends: &ext
+      file: ../docker-compose.yml
       service: redis
 
   xapi:
