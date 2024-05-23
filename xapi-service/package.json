@@ -31,7 +31,8 @@
     "clean": "rm -rf dist",
     "lint": "tslint -p ./tsconfig.json",
     "lint-ci": "yarn lint -- -c tslint.ci.json -q",
-    "duplication": "jscpd"
+    "duplication": "jscpd",
+    "semantic-release": "ht2-release-public-circleci-app"
   },
   "engines": {
     "node": ">=10.18",
@@ -108,6 +109,9 @@
     "tslint-consistent-codestyle": "1.16.0",
     "tslint-immutable": "6.0.1",
     "typescript": "4.2.4"
+  },
+  "resolutions": {
+    "@semantic-release/github": "^7.0.5"
   },
   "publishConfig": {
     "access": "public"
