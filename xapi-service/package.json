@@ -113,7 +113,8 @@
     "typescript": "4.2.4"
   },
   "resolutions": {
-    "@semantic-release/github": "^7.0.5"
+    "@semantic-release/github": "^7.0.5",
+    "grpc": "^1.24.3"
   },
   "publishConfig": {
     "access": "public"
