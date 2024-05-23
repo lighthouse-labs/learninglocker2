@@ -41,7 +41,7 @@
   "dependencies": {
     "@azure/storage-blob": "^10.3.0",
     "@google-cloud/storage": "^1.5.2",
-    "@learninglocker/xapi-validation": "^2.1.10",
+    "@learninglocker/xapi-validation": "^4.0.0",
     "accept-language-parser": "^1.5.0",
     "atob": "^2.0.3",
     "aws-sdk": "^2.205.0",
