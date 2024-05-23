@@ -15,7 +15,7 @@ RUN apt-get update \
         unzip \
         gettext-base \
         socat \
-    && wget -qO- https://deb.nodesource.com/setup_8.x | bash \
+    && wget -qO- https://deb.nodesource.com/setup_10.x | bash \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
