@@ -1,8 +1,8 @@
 # Learning Locker version 2 in Docker
 
-It is a dockerized version of Learning Locker (LL) version 2 based on the installation guides at http://docs.learninglocker.net/guides-custom-installation/
+This is the LHL repo to set up our Learning Locker, which we use to return work context, student Compass use/progress, and so on.
 
-It is was forked from https://github.com/michzimny/learninglocker2-docker. In the topic __Why did I forked__ I will explain my motivations
+It is a dockerized version of Learning Locker (LL) version 2 based on the installation guides at http://docs.learninglocker.net/guides-custom-installation/. It is was forked from https://github.com/michzimny/learninglocker2-docker.
 
 ## Architecture
 
@@ -26,34 +26,35 @@ To make connections between those services work, socat process is run within ui 
 
 ### Development
 
-* open a terminal session (Terminal, iTerm, etc)
-* go to the project (`cd learninglocker2-docker`)
-* type the command `make run`. In the first time, this command will take to long time (download images, mount volumes, etc).
-* If all goes to plan, you will see it in terminal session:
-    ```
-    ui_1      |  ---
-    ui_1      |  ==> ✅  Learning Locker is running, talking to API server on 8080.
-    ui_1      |  ==> 💻  Open http://localhost in a browser to view the app.
-    ui_1      |  ---
-    ui_1      |
-    ```
-* open your browser and type http://localhost. The Learning locker login page should appears.
-* open a new terminal session
-* go to the project
-* type de command `make add-admin`. This command will create a user with login `admin@test.com`, password `lrs123` and organization `MyOrganization`
+- open a terminal session (Terminal, iTerm, etc)
+- go to the project (`cd learninglocker2-docker`)
+- type the command `make run`. In the first time, this command will take to long time (download images, mount volumes, etc).
+- If all goes to plan, you will see it in terminal session:
+  ```
+  ui_1      |  ---
+  ui_1      |  ==> ✅  Learning Locker is running, talking to API server on 8080.
+  ui_1      |  ==> 💻  Open http://localhost in a browser to view the app.
+  ui_1      |  ---
+  ui_1      |
+  ```
+- open your browser and type http://localhost. The Learning locker login page should appears.
+- open a new terminal session
+- go to the project
+- type de command `make add-admin`. This command will create a user with login `admin@test.com`, password `lrs123` and organization `MyOrganization`
 
 When you finish to work, press CTRL+C to closse container session and type `make down`
 
 ### Production
 
 There are two possible ways to do it:
-* __you have a docker swarm or k8 in your infra__
-In this case, you or your DevOps expertise should be using Traeffic or Aws Route 53 to handle request, so you don't need to use `nginx` container. You/DevOps expertise will use the docker-compose.yml as a reference to create a docker-stack.yml/podfile. Moreover, probraly you will edit `.env` file to use Mongodb and Redis as SaaS and to configure AWS S3, CloudWatch, SQS.
 
-    It is all just a hint of what the infra configuration should look like. You are free to setup it as you want
+- **you have a docker swarm or k8 in your infra**
+  In this case, you or your DevOps expertise should be using Traeffic or Aws Route 53 to handle request, so you don't need to use `nginx` container. You/DevOps expertise will use the docker-compose.yml as a reference to create a docker-stack.yml/podfile. Moreover, probraly you will edit `.env` file to use Mongodb and Redis as SaaS and to configure AWS S3, CloudWatch, SQS.
 
-* __you have a standalone machine somewhere__
-Preparing a remote machine for the first time, put all project files in this machine and run the command `docker-compose up -d`
+      It is all just a hint of what the infra configuration should look like. You are free to setup it as you want
+
+- **you have a standalone machine somewhere**
+  Preparing a remote machine for the first time, put all project files in this machine and run the command `docker-compose up -d`
 
 In both scenarios, before start up the project, YOU HAVE TO edit `.env` file and set DOCKER_TAG to the last git commit (SHA-1) to make sure you are versioning your image.
 
@@ -81,9 +82,11 @@ make run
 Open a new terminal session, go to the project and type `docker-compose exec api yarn migrate`
 
 ## Destroying
+
 to remove all project data, image and volumes, open a terminal session, go to the project folder and type de command `make destroy`
 
 ## Why did I forked it?
-* I had to adjust to my infra (aws)
-* To use env variables in many situations to avoid to rebuild images
-* simply the start up in local mode (in my opinion)
+
+- I had to adjust to my infra (aws)
+- To use env variables in many situations to avoid to rebuild images
+- simply the start up in local mode (in my opinion)
