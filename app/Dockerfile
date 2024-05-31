@@ -21,10 +21,8 @@ RUN apt-get update \
 
 RUN npm install -g yarn
 
-ENV LL_TAG=v5.0.0
-RUN git clone https://github.com/LearningLocker/learninglocker.git /opt/learninglocker \
+RUN git clone https://github.com/lighthouse-labs/learninglocker.git /opt/learninglocker \
     && cd /opt/learninglocker \
-    && git checkout $LL_TAG \
     && yarn install \
     && yarn build-all
 
