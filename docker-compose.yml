@@ -14,7 +14,6 @@ services:
   xapi:
     build:
       context: ./xapi-service
-    # command: "yarn start"
     restart: unless-stopped
     environment:
       - MONGO_URL
